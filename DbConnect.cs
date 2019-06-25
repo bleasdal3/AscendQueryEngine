@@ -27,7 +27,7 @@ namespace AscendQueryEngine
       
         public DbConnect(string port, string hostname, string username, string password) //constructor
         {
-            int result;          
+            int result;
             bool success = int.TryParse(port, out result);
 
             if(success)
@@ -39,6 +39,7 @@ namespace AscendQueryEngine
                 Port = 0; //failure state
             }
 
+            
             Hostname = hostname;
             Username = username;
             Password = password;
@@ -50,8 +51,12 @@ namespace AscendQueryEngine
             
             try
             {
-                string connectionString = string.Format("Server={0}; database={1}; UID={2}; password{3};",
-                                                         Hostname, DbName, Username, Password); //port not needed?
+                string connectionString = string.Format("Server={0}; database={1}; UID={2}; password={3};",
+                    Hostname, DbName, Username, Password); 
+
+
+                MessageBoxResult result = MessageBox.Show(connectionString);
+
                 connection = new MySqlConnection(connectionString);
                 connection.Open();
                 return true;

@@ -32,10 +32,7 @@ namespace AscendQueryEngine
             if(dbconnect.Connect())
             {
                 //launch query manager window
-
-
-                //I guess connection is successful here?
-                errorMessage.Text = "I think we're connected!";
+                errorMessage.Text="Connected?";
             }
             else
             {
