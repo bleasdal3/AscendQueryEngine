@@ -23,5 +23,24 @@ namespace AscendQueryEngine
         {
             InitializeComponent();
         }
+
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {   
+            //attempt authentication
+            DbConnect dbconnect = new DbConnect(textBoxHostname.Text, textBoxHostname.Text, textBoxUsername.Text, passwordBox.Password);
+
+            if(dbconnect.Connect())
+            {
+                //launch query manager window
+
+
+                //I guess connection is successful here?
+                errorMessage.Text = "I think we're connected!";
+            }
+            else
+            {
+                errorMessage.Text = "Error connecting to database. Contact IT support.";
+            }
+        }
     }
 }
