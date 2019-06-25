@@ -9,53 +9,24 @@ using MySql.Data.MySqlClient;
 
 namespace AscendQueryEngine
 {
-    class DbConnect
+   static class DbConnect
     {
-        private int Port;
-        private string Hostname;
-        private string Password;
-        private string Username;
+        public static int Port { private get; set; }
+        public static string Hostname { private get; set; }
+        public static string Password { private get; set; }
+        public static string Username { private get; set; }
 
-        private string dbName;
-        public string DbName
-        {
-            get { return dbName; }
-            set { dbName = value; }
-        }
+        public static MySqlConnection connection { get; set; }
 
-        private MySqlConnection connection;
-      
-        public DbConnect(string port, string hostname, string username, string password) //constructor
-        {
-            int result;
-            bool success = int.TryParse(port, out result);
+        public const string DbName = "propcoent-ascendestates";
 
-            if(success)
-            {
-                Port = result;
-            }
-            else
-            {
-                Port = 0; //failure state
-            }
 
-            
-            Hostname = hostname;
-            Username = username;
-            Password = password;
-        }
-
-        public bool Connect()
-        {
-            string DbName = "propcoent-ascendestates"; //TOCHECK
-            
+        public static bool Connect()
+        {           
             try
             {
                 string connectionString = string.Format("Server={0}; database={1}; UID={2}; password={3};",
-                    Hostname, DbName, Username, Password); 
-
-
-                MessageBoxResult result = MessageBox.Show(connectionString);
+                    Hostname, DbName, Username, Password);
 
                 connection = new MySqlConnection(connectionString);
                 connection.Open();
@@ -68,7 +39,7 @@ namespace AscendQueryEngine
             }
         }
 
-        public void Close()
+        static void Close()
         {
             connection.Close();
         }

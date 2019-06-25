@@ -25,14 +25,32 @@ namespace AscendQueryEngine
         }
 
         private void Submit_Click(object sender, RoutedEventArgs e)
-        {   
+        {
             //attempt authentication
-            DbConnect dbconnect = new DbConnect(textBoxHostname.Text, textBoxHostname.Text, textBoxUsername.Text, passwordBox.Password);
+            //DbConnect dbconnect = new DbConnect();
+            int result;
+            bool success = int.TryParse(portNumber.Text, out result);
 
-            if(dbconnect.Connect())
+            if (success)
+            {
+                DbConnect.Port = result;
+            }
+            else
+            {
+                DbConnect.Port = 0; //failure state
+            }
+
+
+            DbConnect.Hostname = textBoxHostname.Text;
+            DbConnect.Username = textBoxUsername.Text;
+            DbConnect.Password = passwordBox.Password;
+
+            if (DbConnect.Connect())
             {
                 //launch query manager window
-                errorMessage.Text="Connected?";
+                QueryManager queryManager = new QueryManager(); //pass connection as arg
+                queryManager.Show();
+                this.Close();
             }
             else
             {
