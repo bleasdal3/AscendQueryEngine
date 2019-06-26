@@ -21,9 +21,9 @@
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="67,110,0,0" Name="textBlockPassword" Text="Password:" VerticalAlignment="Top" Width="110"  />
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="67,140,0,0" Name="textBlockPort" Text="Port:" VerticalAlignment="Top" Width="110"  />
 
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="183,50,0,0" Name="textBoxHostname" VerticalAlignment="Top" Width="222" Text="slave.techblue.co.uk" />
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="183,80,0,0" Name="textBoxUsername" VerticalAlignment="Top" Width="222" Text="ascend"/>
-            <PasswordBox Height="23" HorizontalAlignment="Left" Margin="183,110,0,0" Name="passwordBox" VerticalAlignment="Top" Width="222" Password="1fYGNxv4rxwxiUbso6lN"/>
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="183,50,0,0" Name="textBoxHostname" VerticalAlignment="Top" Width="222" Text="" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="183,80,0,0" Name="textBoxUsername" VerticalAlignment="Top" Width="222" Text=""/>
+            <PasswordBox Height="23" HorizontalAlignment="Left" Margin="183,110,0,0" Name="passwordBox" VerticalAlignment="Top" Width="222" Password=""/>
             <TextBox Height="23" HorizontalAlignment="Left" Margin="183,140,0,0" Name="portNumber" VerticalAlignment="Top" Width="222" />
             <Button Content="Submit" Height="23" HorizontalAlignment="Left" Margin="183,204,0,0" Name="Submit" VerticalAlignment="Top" Width="131" Click="Submit_Click" />
         </Grid>
