@@ -16,7 +16,7 @@ namespace AscendQueryEngine
         public static string Password { private get; set; }
         public static string Username { private get; set; }
 
-        public static MySqlConnection connection { get; set; }
+        public static MySqlConnection Connection { get; set; }
 
         public const string DbName = "propcoent-ascendestates";
 
@@ -28,20 +28,20 @@ namespace AscendQueryEngine
                 string connectionString = string.Format("Server={0}; database={1}; UID={2}; password={3};",
                     Hostname, DbName, Username, Password);
 
-                connection = new MySqlConnection(connectionString);
-                connection.Open();
+                Connection = new MySqlConnection(connectionString);
+                Connection.Open();
                 return true;
             }
             catch(Exception e)
             {
-                MessageBoxResult result = MessageBox.Show(e.ToString());
+                MessageBox.Show(e.ToString());
                 return false; 
             }
         }
 
         static void Close()
         {
-            connection.Close();
+            Connection.Close();
         }
     }
 }

@@ -21,53 +21,130 @@ namespace AscendQueryEngine
     /// </summary>
     public partial class QueryManager : Window
     {
-        DataTable schema;
+        private DataTable schema;      
         private List<string> ViewList = new List<string>();
+        private List<string> ColumnList = new List<string>();
+        private List<string> SelectedColumns = new List<string>();
+        private List<string> Conditions = new List<string>();
+        private string View;
+        
 
         public QueryManager()
         {
             InitializeComponent();
 
-            if(PullDatabaseViews())
+            if(PullDbViews())
             {
-
+                ViewListBox.ItemsSource = ViewList;
             }
             else
             {
-                throw new Exception(); //proper error reporting here
+                throw new Exception(); //TODO proper error reporting here
             }
-            
+
+            BackToCol.IsEnabled = false;
+            BackToView.IsEnabled = false;
+            ColumnButton.IsEnabled = false;
+
+            ComparatorBox.Items.Add("=");
+            ComparatorBox.Items.Add("!=");
+            ComparatorBox.Items.Add(">");
+            ComparatorBox.Items.Add("<");
+            ComparatorBox.Items.Add(">=");
+            ComparatorBox.Items.Add("<=");
+
         }
 
-        private bool PullDatabaseViews()
+        private bool PullDbViews()
         {
             try
             {
                 string query = "SELECT TABLE_NAME FROM information_schema.`TABLES` WHERE TABLE_TYPE LIKE 'VIEW' AND TABLE_SCHEMA LIKE '"
                     + DbConnect.DbName + "'";
 
-                var command = new MySqlCommand(query, DbConnect.connection);
+                var command = new MySqlCommand(query, DbConnect.Connection);
                 var reader = command.ExecuteReader();
-
-                int index = 1;
 
                 while (reader.Read())
                 {
-                    ViewList.Add(reader.GetString(index)); //dipshit. this is iterating along columns returned. You've ONLY returned table names. 
-                    index++;
+                    ViewList.Add(reader.GetString(0)); 
                 }
+                reader.Close();
 
-                MessageBoxResult result = MessageBox.Show(ViewList.ToString());
                 return true;
             }
             catch(Exception e)
             {
-                MessageBoxResult result = MessageBox.Show(e.ToString());
-                return false; //proper error handling
+                MessageBox.Show(e.ToString());
+                return false; //TODO - proper error handling
+            }           
+        }
+
+        private void ViewSelect_Click(object sender, RoutedEventArgs args)
+        {
+            //populate DB cols for view
+            View = (string)ViewListBox.SelectedItem; //check this casting works
+            string query = "SELECT * FROM " + View;
+            var command = new MySqlCommand(query, DbConnect.Connection);
+            var reader = command.ExecuteReader(CommandBehavior.SchemaOnly);
+            schema = reader.GetSchemaTable();
+
+            foreach(DataRow col in schema.Rows)
+            {
+                ColumnList.Add(col.Field<String>("ColumnName"));
             }
 
-
-           
+            #region ResetToggles
+            ColumnsListBox.ClearValue(ItemsControl.ItemsSourceProperty);
+            ColumnsListBox.ItemsSource = ColumnList;
+            reader.Close();
+            ViewButton.IsEnabled = false;
+            BackToView.IsEnabled = true;
+            ColumnButton.IsEnabled = true;
+            #endregion
         }
+
+        private void ColumnSelect_Click(object sender, RoutedEventArgs args)
+        {
+            //populate columns in conditions listbox
+            foreach(string s in ColumnsListBox.SelectedItems)
+            {
+                SelectedColumns.Add(s);
+            }
+
+            #region ResetToggles
+            ConditionsListBox.ClearValue(ItemsControl.ItemsSourceProperty);
+            ConditionsListBox.ItemsSource = SelectedColumns;
+            ColumnButton.IsEnabled = false;
+            BackToCol.IsEnabled = true;
+            BackToView.IsEnabled = false;
+            #endregion
+        }
+
+        private void BackToView_Click(object sender, RoutedEventArgs e)
+        {
+            #region ResetToggles
+            ColumnsListBox.ClearValue(ItemsControl.ItemsSourceProperty);
+            ColumnList.Clear();
+            ColumnsListBox.ItemsSource = ColumnList;
+            ViewButton.IsEnabled = true;
+            ColumnButton.IsEnabled = false;
+            BackToCol.IsEnabled = false;
+            BackToView.IsEnabled = false;
+            #endregion
+        }
+
+        private void BackToCol_Click(object sender, RoutedEventArgs e)
+        {
+            #region ResetToggles
+            ConditionsListBox.ClearValue(ItemsControl.ItemsSourceProperty);
+            SelectedColumns.Clear();
+            ConditionsListBox.ItemsSource = SelectedColumns;
+            ColumnButton.IsEnabled = true;
+            BackToView.IsEnabled = true;
+            BackToCol.IsEnabled = false;
+            #endregion
+        }
+
     }
 }
