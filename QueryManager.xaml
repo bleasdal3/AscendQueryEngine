@@ -19,11 +19,14 @@
         <Button Content="Back" HorizontalAlignment="Left" Margin="807,333,0,0" VerticalAlignment="Top" Width="49" Height="28" x:Name="BackToCol" Click="BackToCol_Click"/>
         <Button Content="Back" HorizontalAlignment="Left" Margin="403,333,0,0" VerticalAlignment="Top" Width="49" Height="28" x:Name="BackToView" Click="BackToView_Click"/>
         <TextBox HorizontalAlignment="Left" Height="58" Margin="930,535,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="147" x:Name="InputBox" FontSize="14"/>
-        <ComboBox HorizontalAlignment="Left" Margin="861,535,0,0" VerticalAlignment="Top" Width="64" Height="58" Name="ComparatorBox" FontSize="20"/>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="1082,535,0,0" VerticalAlignment="Top" Width="72" Height="58" Name="AppendQueryButton"/>
+        <ComboBox HorizontalAlignment="Left" Margin="861,535,0,0" VerticalAlignment="Top" Width="64" Height="58" Name="ComparatorBox" FontSize="20" />
+        <Button Content="Add" HorizontalAlignment="Left" Margin="1082,535,0,0" VerticalAlignment="Top" Width="72" Height="58" Name="ApplyConditionButton" Click="ApplyConditionButton_Click"/>
         <TextBox HorizontalAlignment="Left" Height="49" Margin="53,629,0,0" TextWrapping="Wrap" Name="FullQueryBox" VerticalAlignment="Top" Width="1101" IsEnabled="False"/>
         <Label Content="Full Query" HorizontalAlignment="Left" Margin="53,603,0,0" VerticalAlignment="Top" Width="102"/>
         <Image HorizontalAlignment="Left" Height="100" Margin="1435,131,-265,0" VerticalAlignment="Top" Width="100"/>
+        <Button Content="Query" Name="ExecuteQuery" HorizontalAlignment="Left" Margin="1082,683,0,0" VerticalAlignment="Top" Width="72" Height="44" Click="ExecuteQuery_Click"/>
+        <Button Content="Output Path" HorizontalAlignment="Left" Margin="53,684,0,0" VerticalAlignment="Top" Width="72" Height="44" Name="OutputPath" Click="OutputPath_Click"/>
+        <TextBox HorizontalAlignment="Left" Height="43" Margin="130,684,0,0" TextWrapping="Wrap" Text="Select output path..." Name="PathBox" VerticalAlignment="Top" Width="795"/>
 
     </Grid>
 </Window>

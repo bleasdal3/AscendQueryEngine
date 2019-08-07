@@ -23,3 +23,7 @@ C:\Users\Nicholas.Bleasdale\source\repos\AscendQueryEngine\AscendQueryEngine\bin
 C:\Users\Nicholas.Bleasdale\source\repos\AscendQueryEngine\AscendQueryEngine\obj\Debug\AscendQueryEngine.csproj.CopyComplete
 C:\Users\Nicholas.Bleasdale\source\repos\AscendQueryEngine\AscendQueryEngine\obj\Debug\QueryManager.g.cs
 C:\Users\Nicholas.Bleasdale\source\repos\AscendQueryEngine\AscendQueryEngine\obj\Debug\QueryManager.baml
+C:\Users\Nicholas.Bleasdale\source\repos\AscendQueryEngine\AscendQueryEngine\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Nicholas.Bleasdale\source\repos\AscendQueryEngine\AscendQueryEngine\bin\Debug\Renci.SshNet.dll
+C:\Users\Nicholas.Bleasdale\source\repos\AscendQueryEngine\AscendQueryEngine\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Nicholas.Bleasdale\source\repos\AscendQueryEngine\AscendQueryEngine\bin\Debug\Renci.SshNet.xml

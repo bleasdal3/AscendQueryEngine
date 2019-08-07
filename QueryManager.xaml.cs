@@ -13,6 +13,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
+using System.IO;
+using Microsoft.Win32;
 
 namespace AscendQueryEngine
 {
@@ -27,7 +30,11 @@ namespace AscendQueryEngine
         private List<string> SelectedColumns = new List<string>();
         private List<string> Conditions = new List<string>();
         private string View;
-        
+        private string FullQuery = "";
+        private string path = "";
+        string WhereClause = "";
+        bool InitialCondition = true;
+
 
         public QueryManager()
         {
@@ -45,14 +52,13 @@ namespace AscendQueryEngine
             BackToCol.IsEnabled = false;
             BackToView.IsEnabled = false;
             ColumnButton.IsEnabled = false;
-
             ComparatorBox.Items.Add("=");
             ComparatorBox.Items.Add("!=");
             ComparatorBox.Items.Add(">");
             ComparatorBox.Items.Add("<");
             ComparatorBox.Items.Add(">=");
             ComparatorBox.Items.Add("<=");
-
+            ExecuteQuery.IsEnabled = false;
         }
 
         private bool PullDbViews()
@@ -69,7 +75,9 @@ namespace AscendQueryEngine
                 {
                     ViewList.Add(reader.GetString(0)); 
                 }
+
                 reader.Close();
+                DbConnect.Close();
 
                 return true;
             }
@@ -82,6 +90,7 @@ namespace AscendQueryEngine
 
         private void ViewSelect_Click(object sender, RoutedEventArgs args)
         {
+            DbConnect.Connect();
             //populate DB cols for view
             View = (string)ViewListBox.SelectedItem; //check this casting works
             string query = "SELECT * FROM " + View;
@@ -93,6 +102,8 @@ namespace AscendQueryEngine
             {
                 ColumnList.Add(col.Field<String>("ColumnName"));
             }
+
+            DbConnect.Close();
 
             #region ResetToggles
             ColumnsListBox.ClearValue(ItemsControl.ItemsSourceProperty);
@@ -106,11 +117,23 @@ namespace AscendQueryEngine
 
         private void ColumnSelect_Click(object sender, RoutedEventArgs args)
         {
-            //populate columns in conditions listbox
+            //populate columns in conditions listbox            
+            FullQuery += "SELECT ";
+
             foreach(string s in ColumnsListBox.SelectedItems)
             {
+                
                 SelectedColumns.Add(s);
+                FullQuery += s + ", ";
             }
+
+            //trim last comma
+            FullQuery = FullQuery.Substring(0, (FullQuery.Length - 2));
+
+            //add view
+            FullQuery += " FROM " + View;
+            FullQueryBox.Text = FullQuery;
+             
 
             #region ResetToggles
             ConditionsListBox.ClearValue(ItemsControl.ItemsSourceProperty);
@@ -118,6 +141,7 @@ namespace AscendQueryEngine
             ColumnButton.IsEnabled = false;
             BackToCol.IsEnabled = true;
             BackToView.IsEnabled = false;
+            ExecuteQuery.IsEnabled = true;
             #endregion
         }
 
@@ -131,6 +155,8 @@ namespace AscendQueryEngine
             ColumnButton.IsEnabled = false;
             BackToCol.IsEnabled = false;
             BackToView.IsEnabled = false;
+            FullQuery = "";
+            FullQueryBox.Text = FullQuery;            
             #endregion
         }
 
@@ -143,7 +169,102 @@ namespace AscendQueryEngine
             ColumnButton.IsEnabled = true;
             BackToView.IsEnabled = true;
             BackToCol.IsEnabled = false;
+            FullQuery = "";
+            FullQueryBox.Text = FullQuery;
+            WhereClause = "";
+            InitialCondition = true;
+            ExecuteQuery.IsEnabled = false;
             #endregion
+        }
+
+        private void ApplyConditionButton_Click(object sender, RoutedEventArgs e)
+        {
+            string Comparator = ComparatorBox.Text;
+            string Criteria = InputBox.Text;
+            string Condition = (string)ConditionsListBox.SelectedItem;
+
+            
+            if(Comparator == "" || Criteria == "" || Condition == null)
+            {
+                MessageBox.Show("Please enter a comparator and criteria, and also a column.");
+            }
+            else
+            {
+                if(InitialCondition == false)
+                {
+                    WhereClause += " AND ";
+                }
+                else
+                {
+                    WhereClause += " WHERE ";
+                }
+
+                WhereClause += Condition + " " + Comparator + " " + Criteria;
+                FullQueryBox.Text = (FullQuery += WhereClause);
+                InitialCondition = false;
+
+                #region ResetToggles
+                ComparatorBox.Text = "";
+                ConditionsListBox.UnselectAll();
+                InputBox.Text = "";
+                WhereClause = "";
+                #endregion
+            }
+        }
+
+        private void OutputPath_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if(openFileDialog.ShowDialog() == true)
+            {
+                path = openFileDialog.FileName;
+                PathBox.Text = path;
+            }
+        }
+
+        private void ExecuteQuery_Click(object sender, RoutedEventArgs e)
+        {
+            FullQuery += ";"; //close query
+            //FullQuery += " LIMIT 30;"; //debug limit
+            ExecuteQuery.IsEnabled = false; //prevent multiple clicks by impatient user if the file is large.
+            
+            try
+            {
+                if (path == "")
+                {
+                    MessageBox.Show("Please select output file.");
+                }
+                else
+                {
+                    DbConnect.Connect();
+
+                    var command = new MySqlCommand(FullQuery, DbConnect.Connection);
+                    //DataTable table = new DataTable();
+                    //table.Load(command.ExecuteReader());
+                    //string _csv = DataTableReader.T
+                    //string JSONString = DbConnect.SerializeTable(table);
+
+                    MySqlDataReader reader = command.ExecuteReader();
+                    string _csv = reader.ToCSV(true);
+
+                    File.WriteAllText(path, _csv);
+
+                    reader.Close();
+                    DbConnect.Close();
+
+                    MessageBox.Show("Complete!");
+                    ExecuteQuery.IsEnabled = true; //turn it back on again
+                    path = "";
+                    PathBox.Text = ""; //require manual input to overwrite.
+                }
+            }
+
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                ExecuteQuery.IsEnabled = true;
+            }
+
         }
 
     }

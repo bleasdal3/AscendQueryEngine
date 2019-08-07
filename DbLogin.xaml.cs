@@ -40,7 +40,6 @@ namespace AscendQueryEngine
                 DbConnect.Port = 0; //failure state
             }
 
-
             DbConnect.Hostname = textBoxHostname.Text;
             DbConnect.Username = textBoxUsername.Text;
             DbConnect.Password = passwordBox.Password;
