@@ -227,6 +227,7 @@ namespace AscendQueryEngine
             FullQuery += ";"; //close query
             //FullQuery += " LIMIT 30;"; //debug limit
             ExecuteQuery.IsEnabled = false; //prevent multiple clicks by impatient user if the file is large.
+            Mouse.OverrideCursor = Cursors.Wait; // set the cursor to loading spinner
             
             try
             {
@@ -256,6 +257,7 @@ namespace AscendQueryEngine
                     ExecuteQuery.IsEnabled = true; //turn it back on again
                     path = "";
                     PathBox.Text = ""; //require manual input to overwrite.
+                    Mouse.OverrideCursor = Cursors.Arrow; // set the cursor back to arrow
                 }
             }
 
