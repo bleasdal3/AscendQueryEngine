@@ -22,14 +22,26 @@ namespace AscendQueryEngine
         public DbLogin()
         {
             InitializeComponent();
+            DomainBox.Items.Add("Ascend");
+            DomainBox.Items.Add("LivDifRent");
+            DomainBox.SelectedItem = "Ascend";
+
         }
 
         private void Submit_Click(object sender, RoutedEventArgs e)
-        {
+        {            
+            //detect which domain is selected
+            if ((string)DomainBox.SelectedItem == "Ascend")
+            {
+                DbConnect.DbName = "propcoent-ascendestates";
+            }
+            else if ((string)DomainBox.SelectedItem == "LivDifRent")
+            {
+                DbConnect.DbName = "propcoent-difrent";
+            }
+
             //attempt authentication
-            //DbConnect dbconnect = new DbConnect();
-            int result;
-            bool success = int.TryParse(portNumber.Text, out result);
+            bool success = int.TryParse(portNumber.Text, out int result);
 
             if (success)
             {
@@ -43,7 +55,7 @@ namespace AscendQueryEngine
             DbConnect.Hostname = textBoxHostname.Text;
             DbConnect.Username = textBoxUsername.Text;
             DbConnect.Password = passwordBox.Password;
-
+                       
             if (DbConnect.Connect())
             {
                 //launch query manager window

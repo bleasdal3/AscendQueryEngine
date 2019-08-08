@@ -10,7 +10,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Ascend Query Manager" VerticalAlignment="Top" Height="50" Width="303" FontSize="25"/>
         <ListBox HorizontalAlignment="Left" Height="442" Margin="53,151,0,0" VerticalAlignment="Top" Width="345" x:Name="ViewListBox"/>
         <ListBox HorizontalAlignment="Left" Height="442" Margin="457,151,0,0" VerticalAlignment="Top" Width="345" x:Name="ColumnsListBox" SelectionMode="Multiple"/>
-        <ListBox HorizontalAlignment="Left" Height="379" Margin="861,151,0,0" VerticalAlignment="Top" Width="293" x:Name="ConditionsListBox"/>
+        <ListBox HorizontalAlignment="Left" Height="379" Margin="861,151,0,0" VerticalAlignment="Top" Width="293" x:Name="ConditionsListBox" SelectionChanged="ConditionsListBox_SelectionChanged"/>
         <Label Content="View Select" HorizontalAlignment="Left" Margin="96,108,0,0" VerticalAlignment="Top" Height="38" Width="166" RenderTransformOrigin="0.5,0.5" FontSize="20"/>
         <Label Content="Column Select" HorizontalAlignment="Left" Margin="493,108,0,0" VerticalAlignment="Top" Height="38" Width="166" RenderTransformOrigin="0.5,0.5" FontSize="20 "/>
         <Button Content="Select" HorizontalAlignment="Left" Margin="224,116,0,0" VerticalAlignment="Top" Width="108" Height="24" Click="ViewSelect_Click" x:Name="ViewButton"/>
@@ -27,6 +27,7 @@
         <Button Content="Query" Name="ExecuteQuery" HorizontalAlignment="Left" Margin="1082,683,0,0" VerticalAlignment="Top" Width="72" Height="44" Click="ExecuteQuery_Click"/>
         <Button Content="Output Path" HorizontalAlignment="Left" Margin="53,684,0,0" VerticalAlignment="Top" Width="72" Height="44" Name="OutputPath" Click="OutputPath_Click"/>
         <TextBox HorizontalAlignment="Left" Height="43" Margin="130,684,0,0" TextWrapping="Wrap" Text="Select output path..." Name="PathBox" VerticalAlignment="Top" Width="795"/>
+        <TextBox HorizontalAlignment="Left" Height="20" Margin="1092,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="168" Name="DomainBox"/>
 
     </Grid>
 </Window>

@@ -1,0 +1,21 @@
+﻿<Window x:Class="AscendQueryEngine.DateCriteria"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AscendQueryEngine"
+        mc:Ignorable="d"
+        Title="Create Date Criteria" Height="170" Width="400">
+    <Grid Margin="0,0,2,-2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="75*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Start" Grid.Column="1" HorizontalAlignment="Left" Margin="32,24,0,0" VerticalAlignment="Top" Height="26" Width="35"/>
+        <Label Content="End" Grid.Column="1" HorizontalAlignment="Left" Margin="243,24,0,0" VerticalAlignment="Top" Height="26" Width="35"/>
+        <DatePicker Name="StartPicker" Grid.Column="1" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="39" Width="123"/>
+        <DatePicker Name="EndPicker" Grid.Column="1" HorizontalAlignment="Left" Margin="198,50,0,0" VerticalAlignment="Top" Height="39" Width="123"/>
+        <Button Name="SubmitDatesButton" Click="SubmitDatesButton_Click" Content="Submit" Grid.Column="1" HorizontalAlignment="Left" Margin="132,102,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

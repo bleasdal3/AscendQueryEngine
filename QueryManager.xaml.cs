@@ -28,7 +28,6 @@ namespace AscendQueryEngine
         private List<string> ViewList = new List<string>();
         private List<string> ColumnList = new List<string>();
         private List<string> SelectedColumns = new List<string>();
-        private List<string> Conditions = new List<string>();
         private string View;
         private string FullQuery = "";
         private string path = "";
@@ -59,6 +58,7 @@ namespace AscendQueryEngine
             ComparatorBox.Items.Add(">=");
             ComparatorBox.Items.Add("<=");
             ExecuteQuery.IsEnabled = false;
+            DomainBox.Text = DbConnect.DbName;
         }
 
         private bool PullDbViews()
@@ -179,17 +179,10 @@ namespace AscendQueryEngine
 
         private void ApplyConditionButton_Click(object sender, RoutedEventArgs e)
         {
-            string Comparator = ComparatorBox.Text;
-            string Criteria = InputBox.Text;
-            string Condition = (string)ConditionsListBox.SelectedItem;
-
-            
-            if(Comparator == "" || Criteria == "" || Condition == null)
+            if (!InputBox.IsEnabled && InputBox.Text == "[DATE CRITERIA]")
             {
-                MessageBox.Show("Please enter a comparator and criteria, and also a column.");
-            }
-            else
-            {
+                //date criteria entered, pull from class
+                string clause = DateCriteriaData.ConstructClause();
                 if(InitialCondition == false)
                 {
                     WhereClause += " AND ";
@@ -199,17 +192,44 @@ namespace AscendQueryEngine
                     WhereClause += " WHERE ";
                 }
 
-                WhereClause += Condition + " " + Comparator + " " + Criteria;
-                FullQueryBox.Text = (FullQuery += WhereClause);
-                InitialCondition = false;
-
-                #region ResetToggles
-                ComparatorBox.Text = "";
-                ConditionsListBox.UnselectAll();
-                InputBox.Text = "";
-                WhereClause = "";
-                #endregion
+                WhereClause += clause;
+                InputBox.IsEnabled = true;
             }
+
+            else
+            {
+                string Comparator = ComparatorBox.Text;
+                string Criteria = InputBox.Text;
+                string Condition = (string)ConditionsListBox.SelectedItem;
+
+                if (Comparator == "" || Criteria == "" || Condition == null)
+                {
+                    MessageBox.Show("Please enter a comparator and criteria, and also a column.");
+                }
+                else
+                {
+                    if (InitialCondition == false)
+                    {
+                        WhereClause += " AND ";
+                    }
+                    else
+                    {
+                        WhereClause += " WHERE ";
+                    }
+
+                    WhereClause += Condition + " " + Comparator + " " + Criteria;                   
+                }
+            }
+
+            FullQueryBox.Text = (FullQuery += WhereClause);
+            InitialCondition = false;
+
+            #region ResetToggles
+            ComparatorBox.Text = "";
+            ConditionsListBox.UnselectAll();
+            InputBox.Text = "";
+            WhereClause = "";
+            #endregion
         }
 
         private void OutputPath_Click(object sender, RoutedEventArgs e)
@@ -269,5 +289,30 @@ namespace AscendQueryEngine
 
         }
 
+        private void ConditionsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string condition = (string)ConditionsListBox.SelectedItem;
+
+            try
+            {
+
+                if (condition.Contains("date"))
+                {
+                    //pass the column name to construct clause in new window
+                    DateCriteria dateCriteria = new DateCriteria(condition);
+                    dateCriteria.Show();
+                    //blank the condition box and hit add when the other window is closed from the classdata
+                    InputBox.IsEnabled = false;
+                    InputBox.Text = "[DATE CRITERIA]";
+                }
+            }
+
+            catch(Exception ex)
+            {
+                //do nothing, nothing selected so nothing happens.
+            }
+
+           
+        }
     }
 }

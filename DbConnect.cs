@@ -17,10 +17,9 @@ namespace AscendQueryEngine
         public static string Hostname { private get; set; }
         public static string Password { private get; set; }
         public static string Username { private get; set; }
+        public static string DbName { get; set; }
 
         public static MySqlConnection Connection { get; set; }
-
-        public const string DbName = "propcoent-ascendestates"; //probably should need to select ascend or LD
 
         public static string SerializeTable(DataTable table)
         {
