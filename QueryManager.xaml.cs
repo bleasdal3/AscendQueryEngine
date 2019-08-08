@@ -104,7 +104,6 @@ namespace AscendQueryEngine
             }
 
             DbConnect.Close();
-
             #region ResetToggles
             ColumnsListBox.ClearValue(ItemsControl.ItemsSourceProperty);
             ColumnsListBox.ItemsSource = ColumnList;
@@ -134,7 +133,6 @@ namespace AscendQueryEngine
             FullQuery += " FROM " + View;
             FullQueryBox.Text = FullQuery;
              
-
             #region ResetToggles
             ConditionsListBox.ClearValue(ItemsControl.ItemsSourceProperty);
             ConditionsListBox.ItemsSource = SelectedColumns;
@@ -235,6 +233,7 @@ namespace AscendQueryEngine
         private void OutputPath_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+
             if(openFileDialog.ShowDialog() == true)
             {
                 path = openFileDialog.FileName;
@@ -260,19 +259,11 @@ namespace AscendQueryEngine
                     DbConnect.Connect();
 
                     var command = new MySqlCommand(FullQuery, DbConnect.Connection);
-                    //DataTable table = new DataTable();
-                    //table.Load(command.ExecuteReader());
-                    //string _csv = DataTableReader.T
-                    //string JSONString = DbConnect.SerializeTable(table);
-
                     MySqlDataReader reader = command.ExecuteReader();
                     string _csv = reader.ToCSV(true);
-
                     File.WriteAllText(path, _csv);
-
                     reader.Close();
                     DbConnect.Close();
-
                     MessageBox.Show("Complete!");
                     ExecuteQuery.IsEnabled = true; //turn it back on again
                     path = "";
@@ -280,22 +271,18 @@ namespace AscendQueryEngine
                     Mouse.OverrideCursor = Cursors.Arrow; // set the cursor back to arrow
                 }
             }
-
             catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 ExecuteQuery.IsEnabled = true;
             }
-
         }
 
         private void ConditionsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string condition = (string)ConditionsListBox.SelectedItem;
-
             try
             {
-
                 if (condition.Contains("date"))
                 {
                     //pass the column name to construct clause in new window
@@ -306,13 +293,10 @@ namespace AscendQueryEngine
                     InputBox.Text = "[DATE CRITERIA]";
                 }
             }
-
             catch(Exception ex)
             {
                 //do nothing, nothing selected so nothing happens.
-            }
-
-           
+            }           
         }
     }
 }
