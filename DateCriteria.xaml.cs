@@ -34,7 +34,7 @@ namespace AscendQueryEngine
 
                 if (StartPicker.SelectedDate == null) //null or blank?
                 {
-                    StartDate = "1900-01-01";
+                    DateCriteriaData.StartDate = "1900-01-01";
                 }
                 else
                 {
@@ -44,7 +44,7 @@ namespace AscendQueryEngine
 
                 if (EndPicker.SelectedDate == null)
                 {
-                    EndDate = "2100-01-01";
+                    DateCriteriaData.EndDate = "2100-01-01";
                 }
                 else
                 {
