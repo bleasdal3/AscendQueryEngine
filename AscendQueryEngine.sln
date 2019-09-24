@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AscendQueryEngine", "AscendQueryEngine.csproj", "{89115D2C-4E11-42F3-A73E-4E69ED0B6740}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Templates", "..\Templates\Templates.csproj", "{4B19B3E6-F7D2-464E-BFE1-ACB2E1BD352B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates", "..\Templates\Templates.csproj", "{4B19B3E6-F7D2-464E-BFE1-ACB2E1BD352B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests", "..\Unit Tests\Unit Tests.csproj", "{C6756416-F9B4-4ED8-B9E3-A2938F46C078}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4B19B3E6-F7D2-464E-BFE1-ACB2E1BD352B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B19B3E6-F7D2-464E-BFE1-ACB2E1BD352B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B19B3E6-F7D2-464E-BFE1-ACB2E1BD352B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6756416-F9B4-4ED8-B9E3-A2938F46C078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6756416-F9B4-4ED8-B9E3-A2938F46C078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6756416-F9B4-4ED8-B9E3-A2938F46C078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6756416-F9B4-4ED8-B9E3-A2938F46C078}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

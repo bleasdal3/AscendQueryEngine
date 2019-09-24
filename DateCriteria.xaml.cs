@@ -20,7 +20,6 @@ namespace AscendQueryEngine
     /// </summary>
     public partial class DateCriteria : Window
     {
-
         public string StartDate = "";
         public string EndDate = "";
         public DateCriteria(string columnName)
@@ -31,26 +30,25 @@ namespace AscendQueryEngine
 
         private void SubmitDatesButton_Click(object sender, RoutedEventArgs e)
         {
+            if (StartPicker.SelectedDate == null) //null or blank?
+            {
+                DateCriteriaData.StartDate = "1900-01-01";
+            }
+            else
+            {
+                DateTime date = (DateTime)StartPicker.SelectedDate; //this casting is bonkers. DateTime? doesnt have the associated toString overload I need
+                DateCriteriaData.StartDate = date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
 
-                if (StartPicker.SelectedDate == null) //null or blank?
-                {
-                    DateCriteriaData.StartDate = "1900-01-01";
-                }
-                else
-                {
-                    DateTime date = (DateTime)StartPicker.SelectedDate; //this casting is bonkers. DateTime? doesnt have the associated toString overload I need
-                    DateCriteriaData.StartDate = date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);                
-                }
-
-                if (EndPicker.SelectedDate == null)
-                {
-                    DateCriteriaData.EndDate = "2100-01-01";
-                }
-                else
-                {
-                    DateTime date = (DateTime)EndPicker.SelectedDate; 
-                    DateCriteriaData.EndDate = date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-                }
+            if (EndPicker.SelectedDate == null)
+            {
+                DateCriteriaData.EndDate = "2100-01-01";
+            }
+            else
+            {
+                DateTime date = (DateTime)EndPicker.SelectedDate;
+                DateCriteriaData.EndDate = date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
 
             this.Close();
         }

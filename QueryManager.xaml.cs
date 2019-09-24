@@ -2,18 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Newtonsoft.Json;
 using System.IO;
 using Microsoft.Win32;
 
@@ -33,7 +24,6 @@ namespace AscendQueryEngine
         private string path = "";
         string WhereClause = "";
         bool InitialCondition = true;
-
 
         public QueryManager()
         {
@@ -193,7 +183,6 @@ namespace AscendQueryEngine
                 WhereClause += clause;
                 InputBox.IsEnabled = true;
             }
-
             else
             {
                 string Comparator = ComparatorBox.Text;
@@ -243,8 +232,7 @@ namespace AscendQueryEngine
 
         private void ExecuteQuery_Click(object sender, RoutedEventArgs e)
         {
-            FullQuery += ";"; //close query
-            //FullQuery += " LIMIT 30;"; //debug limit
+            FullQuery += ";"; //close query            
             ExecuteQuery.IsEnabled = false; //prevent multiple clicks by impatient user if the file is large.
             Mouse.OverrideCursor = Cursors.Wait; // set the cursor to loading spinner
             
@@ -267,8 +255,7 @@ namespace AscendQueryEngine
                     MessageBox.Show("Complete!");
                     ExecuteQuery.IsEnabled = true; //turn it back on again
                     path = "";
-                    PathBox.Text = ""; //require manual input to overwrite.
-                    Mouse.OverrideCursor = Cursors.Arrow; // set the cursor back to arrow
+                    PathBox.Text = ""; //require manual input to overwrite.                                                           
                 }
             }
             catch(Exception ex)
@@ -276,6 +263,7 @@ namespace AscendQueryEngine
                 MessageBox.Show(ex.ToString());
                 ExecuteQuery.IsEnabled = true;
             }
+            Mouse.OverrideCursor = Cursors.Arrow; // set the cursor back to arrow
         }
 
         private void ConditionsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

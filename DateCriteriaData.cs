@@ -17,9 +17,7 @@ namespace AscendQueryEngine
          */
         public static string ColumnName { get; set; }
         public static string StartDate {get; set;}
-
         public static string EndDate { get; set; }
-
         public static string Clause { get; set; }
 
         public static string ConstructClause()
@@ -29,7 +27,5 @@ namespace AscendQueryEngine
             EndDate = string.Empty;
             return Clause;
         }
-
     }
-
 }

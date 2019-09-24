@@ -27,7 +27,6 @@
         <Button Content="Query" Name="ExecuteQuery" HorizontalAlignment="Left" Margin="1082,683,0,0" VerticalAlignment="Top" Width="72" Height="44" Click="ExecuteQuery_Click"/>
         <Button Content="Output Path" HorizontalAlignment="Left" Margin="53,684,0,0" VerticalAlignment="Top" Width="72" Height="44" Name="OutputPath" Click="OutputPath_Click"/>
         <TextBox HorizontalAlignment="Left" Height="43" Margin="130,684,0,0" TextWrapping="Wrap" Text="Select output path..." Name="PathBox" VerticalAlignment="Top" Width="795"/>
-        <TextBox HorizontalAlignment="Left" Height="20" Margin="1092,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="168" Name="DomainBox"/>
-
+        <TextBox HorizontalAlignment="Left" Height="20" Margin="1092,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="146" Name="DomainBox"/>
     </Grid>
 </Window>

@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using MySql.Data;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
 namespace AscendQueryEngine
 {
-   static class DbConnect
+    static class DbConnect
     {
         public static int Port { private get; set; }
         public static string Hostname { private get; set; }
