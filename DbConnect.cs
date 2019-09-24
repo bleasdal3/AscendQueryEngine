@@ -20,6 +20,7 @@ namespace AscendQueryEngine
         public static string SerializeTable(DataTable table)
         {
             string JSONString = "";
+            string tempingStill = "";
             JSONString = JsonConvert.SerializeObject(table);
             return JSONString;
         }
